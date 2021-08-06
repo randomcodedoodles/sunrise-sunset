@@ -1,0 +1,22 @@
+{
+  "name": "sunrise-sunset",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server_b.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server_b"
+  },
+  "keywords": [
+    "sunrise-sunset"
+  ],
+  "author": "XW",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "moment": "^2.29.1",
+    "request": "^2.88.2"
+  }
+}

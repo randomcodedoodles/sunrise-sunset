@@ -2,10 +2,10 @@
   "name": "sunrise-sunset",
   "version": "1.0.0",
   "description": "",
-  "main": "server_b.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server_b"
+    "start": "node server"
   },
   "keywords": [
     "sunrise-sunset"

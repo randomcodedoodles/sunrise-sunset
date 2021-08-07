@@ -4,7 +4,6 @@
 
 //method 1: getRandomLocations - generating points closer to either center (lat/lon) or edge (radius/distance)
 exports.getRandomLocations = function (latitude, longitude, radiusInMeters,count) {
-    //console.log(latitude," ",longitude+1, " i/p")
     const getRandomCoordinates = function (radius, uniform) {
         // Generate two random numbers
         var a = Math.random(),
@@ -41,14 +40,12 @@ exports.getRandomLocations = function (latitude, longitude, radiusInMeters,count
             longitude: longitude + (offsetLongitude * (180 / Math.PI))
         })
     }
-    //console.log(randomCoordinates[0].longitude)
+
     return randomCoordinates;
 };
 
 //method 2: generating mid points between center (lat/lon) and edge (distance/radius)
 exports.getRandomGeo=function randomGeo(x0,y0, radius,count) {
-    //var y0 = center.latitude;
-    //var x0 = center.longitude;
     var rd = radius / 111300; //radiusInDegrees
     var randomCoordinates = [];
     for(let i=0;i<count;i++){

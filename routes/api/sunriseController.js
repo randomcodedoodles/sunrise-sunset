@@ -14,10 +14,10 @@ exports.getDayLengthByUrl=async (req,res,next)=>{
         else{
             if(req.query.lat&&(isNaN(req.query.lat)||isNaN(parseFloat(req.query.lat))||req.query.lat*1.0<-90||req.query.lat*1.0>90)) throw new CustomError('invalid latitude',400)
             if(req.query.lng&&(isNaN(req.query.lng)||isNaN(parseFloat(req.query.lng))||req.query.lng*1.0<-180||req.query.lng*1.0>180)) throw new CustomError('invalid longitude',400)
-            lat=req.query.lat*1.0;lng=preq.query.lng*1.0;
+            lat=req.query.lat*1.0;lng=req.query.lng*1.0;
         }
         const count=(req.query.count&&!isNaN(req.query.count)&&!isNaN(parseFloat(req.query.count))?req.query.count:process.env.COUNT)*1
-        const distance=(req.query.distance&&!isNaN(req.query.distance)&&!sNaN(parseFloat(req.query.distance))?req.query.distance:process.env.DISTANCE)*1.0
+        const distance=(req.query.distance&&!isNaN(req.query.distance)&&!isNaN(parseFloat(req.query.distance))?req.query.distance:process.env.DISTANCE)*1.0
         
 
         //2: generating random coordinates
@@ -67,7 +67,7 @@ exports.getDayLengthByPost=async (req,res,next)=>{
         else{
             if(typeof req.body.lat!='number'||req.body.lat*1.0<-90||req.body.lat*1.0>90) throw new CustomError('invalid latitude',400)
             if(typeof req.body.lng!='number'||req.body.lng*1.0<-180||req.body.lng*1.0>180) throw new CustomError('invalid longitude',400)
-            lat=req.body.lat*1.0;lng=preq.body.lng*1.0;
+            lat=req.body.lat*1.0;lng=req.body.lng*1.0;
         }
         const count=Math.ceil(typeof req.body.count=='number'?req.body.count:process.env.COUNT)
         const distance=(typeof req.body.distance=='number'?req.body.distance:process.env.DISTANCE)*1.0

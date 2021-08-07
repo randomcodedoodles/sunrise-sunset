@@ -32,6 +32,7 @@ exports.getDayLengthByUrl=async (req,res,next)=>{
         var sunriseTimes=[]
         var earliest
         for(let i=0;i<point.length;i=i+5){
+            //fetch times for not more than 5 points in parallel
             const sunrise_times=await Promise.all(point.slice(i,Math.min(i+5,point.length)).map(_p=>{
                 return fetchTimesByRequest(url+`lat=${_p.latitude}&lng=${_p.longitude}`)
             })) 
@@ -83,6 +84,7 @@ exports.getDayLengthByPost=async (req,res,next)=>{
         var earliest=[];earliest.push(undefined)
         var sunriseTimes=[]
         for(let i=0;i<point.length;i=i+5){
+            //fetch times for not more than 5 points in parallel
             await Promise.all(point.slice(i,Math.min(i+5,point.length)).map(async _p=>{
                 try{
                     await fetchTimesByAxios(url+`lat=${_p.latitude}&lng=${_p.longitude}`,sunriseTimes,earliest,format)

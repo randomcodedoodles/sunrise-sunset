@@ -57,12 +57,12 @@ exports.getDayLengthByUrl=async (req,res,next)=>{
                 sunriseTimes.push(_t.results)
             })
         }
-        console.log(sunriseTimes.length)
+        console.log(sunriseTimes)
         //Step 4: outputting a list of day lengths that have earliest sunrise time
         //const daylength=sunriseTimes.filter(_t=>moment(_t.sunrise,format).isSame(earliest)).map(_el=>_el.day_length)
-        res.status(200).send({results: sunriseTimes, unit}) //res.status(200).send({results: sunriseTimes, unit: `${}`})
+        //res.status(200).send({results: sunriseTimes, unit}) //res.status(200).send({results: sunriseTimes, unit: `${}`})
         //Alternatively can use extendedFeature to find a list of output of which input meets criteria
-        //res.status(200).send(extendedFeature.getMinMax(0,'sunrise', 'day_length',sunriseTimes,format))
+        res.status(200).send(extendedFeature.getMinMax(0,'sunrise', 'day_length',sunriseTimes,format))
         //res.status(200).send(extendedFeature.getMinMax(1,'day_length','sunrise', sunriseTimes,format))
 
     }catch(err){

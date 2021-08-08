@@ -64,7 +64,7 @@ exports.getRandomGeo=function randomGeo(x0,y0, radius,count) {
             latitude: xp+x0
         })
     }
-
+    console.log(randomCoordinates)
     return randomCoordinates
 }
 

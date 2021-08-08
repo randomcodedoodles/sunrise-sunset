@@ -27,7 +27,7 @@ exports.fetchTimesByAxios = (url,sunriseData,earliest,format)=>{
                     sunriseData.push(response.data.results) 
                     return response.data.results
                 })
-                .then(function (response){
+                .then(function (response){ //find earliest sunrise time
                     const sunrisetime=moment(response.sunrise,format)
                     if(earliest[0]==undefined||sunrisetime.isBefore(earliest[0])) earliest[0]=sunrisetime
                 })

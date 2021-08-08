@@ -40,7 +40,7 @@ exports.getRandomLocations = function (latitude, longitude, radiusInMeters,count
             longitude: longitude + (offsetLongitude * (180 / Math.PI))
         })
     }
-
+    console.log(randomCoordinates)
     return randomCoordinates;
 };
 

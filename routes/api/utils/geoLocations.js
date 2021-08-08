@@ -25,22 +25,26 @@ exports.getRandomLocations = function (latitude, longitude, radiusInMeters,count
 
     var randomCoordinates = [];
     for(let i=0;i<count;i++){
-        const randomCoordinate=getRandomCoordinates(radiusInMeters, true,count);
+        const randomCoordinate = getRandomCoordinates(radiusInMeters, true, count);
+
         // Earths radius in meters via WGS 84 model.
         const earth = 6378137;
+
         // Offsets in meters.
         const northOffset = randomCoordinate[0],
         eastOffset = randomCoordinate[1];
+
         // Offset coordinates in radians.
         const offsetLatitude = northOffset / earth,
         offsetLongitude = eastOffset / (earth * Math.cos(Math.PI * (latitude / 180)));
+        
         // Offset position in decimal degrees.
         randomCoordinates.push({
             latitude: latitude + (offsetLatitude * (180 / Math.PI)),
             longitude: longitude + (offsetLongitude * (180 / Math.PI))
         })
     }
-    console.log(randomCoordinates)
+   //console.log(randomCoordinates)
     return randomCoordinates;
 };
 
@@ -64,11 +68,11 @@ exports.getRandomGeo=function randomGeo(x0,y0, radius,count) {
             latitude: xp+x0
         })
     }
-    console.log(randomCoordinates)
+   //console.log(randomCoordinates)
     return randomCoordinates
 }
 
-
+//for testing only - to verify if the distance between any two random points generated is no greater than the radius distance (input param specified by user)
 exports.getDistance = function distance(lat1, lon1, lat2, lon2) {
     var R = 6371000;//6378137
     var a = 0.5 - Math.cos((lat2 - lat1) * Math.PI / 180) / 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * (1 - Math.cos((lon2 - lon1) * Math.PI / 180)) / 2;

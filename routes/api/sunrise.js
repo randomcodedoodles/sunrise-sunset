@@ -1,6 +1,6 @@
-const express=require('express')
-const router=express.Router()
-const sunriseController=require('./sunriseController')
+const express = require('express')
+const router = express.Router()
+const sunriseController = require('./sunriseController')
 
 router
   .route('/')

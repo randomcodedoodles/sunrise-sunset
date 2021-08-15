@@ -3,8 +3,8 @@ process.on('uncaughtException',err => {
     process.exit(1)
 })
 const express = require('express')
-const sunriseApiRouter = require('./routes/api/sunrise');
-const CustomError = require('./routes/api/utils/customError');
+const sunriseApiRouter = require('./routes/api/sunrise')
+const CustomError = require('./routes/api/utils/customError')
 const globalErrHandler = require('./globalErrHandler')
 
 const app = express()

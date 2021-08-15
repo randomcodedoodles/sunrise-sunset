@@ -42,34 +42,34 @@ exports.getRandomLocations = function (latitude, longitude, radiusInMeters,count
         randomCoordinates.push({
             latitude: latitude + (offsetLatitude * (180 / Math.PI)),
             longitude: longitude + (offsetLongitude * (180 / Math.PI))
-        })
+        });
     }
    //console.log(randomCoordinates)
     return randomCoordinates;
 };
 
 //method 2: generating mid points between center (lat/lon) and edge (distance/radius)
-exports.getRandomGeo=function randomGeo(x0,y0, radius,count) {
-    var rd = radius / 111300; //radiusInDegrees
+//https://gis.stackexchange.com/questions/25877/generating-random-locations-nearby
+//https://gis.stackexchange.com/questions/69328/generate-random-location-within-specified-distance-of-a-given-point
+exports.getRandomGeo=function randomGeo(lat, lon, radius,count) {
+    var radiusInDegrees = radius / 111300; 
     var randomCoordinates = [];
-    for(let i=0;i<count;i++){
+    for(let i = 0; i < count; i++){
         var u = Math.random();
         var v = Math.random();
 
-        var w = rd * Math.sqrt(u);
-        var t = 2 * Math.PI * v;
-        var x = w * Math.cos(t); 
-        var y = w * Math.sin(t); 
+        var lat_offset = (radiusInDegrees * Math.sqrt(u)) * Math.cos(2 * Math.PI * v); 
+        var lon_offset = (radiusInDegrees * Math.sqrt(u)) * Math.sin(2 * Math.PI * v); 
 
-        var xp = x / Math.cos(y0*Math.PI/180);
+        var lat_offset_tunned = lat_offset / Math.cos(lon * Math.PI / 180);
 
         randomCoordinates.push({
-            longitude: y+y0,
-            latitude: xp+x0
-        })
+            longitude: lon_offset + lon,
+            latitude: lat_offset_tunned + lat
+        });
     }
    //console.log(randomCoordinates)
-    return randomCoordinates
+    return randomCoordinates;
 }
 
 //for testing only - to verify if the distance between any two random points generated is no greater than the radius distance (input param specified by user)

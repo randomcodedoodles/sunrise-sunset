@@ -38,7 +38,7 @@ exports.getDayLengthByUrl = async (req,res,next) => {
         //method 1
         const point = getRandomLocations(lat, lng, distance, count)
         //method 2
-        //const point = getRandomGeo(lat, lng, distance, count);
+        //const point = getRandomGeo(lat, lng, distance, count)
 
 
         //Step 3: fetching sunrise /sunset times - implemented by request
@@ -46,17 +46,17 @@ exports.getDayLengthByUrl = async (req,res,next) => {
         const format = formatted == '1'?'hh:mm:ss a' : moment.ISO_8601
         let sunriseTimes = []
         let earliest
-        for(let i = 0;i < point.length;i = i + 5){
+        for(let i = 0; i < point.length; i = i + 5){
             //fetch times for not more than 5 points in parallel
-            const sunrise_times = await Promise.all(point.slice(i, Math.min(i + 5,point.length)).map(_p => {
+            const sunrise_times = await Promise.all(point.slice(i, Math.min(i + 5, point.length)).map(_p => {
                 return fetchTimesByRequest(url + `lat=${_p.latitude}&lng=${_p.longitude}`)
             })) 
 
             //3b: Promise.all().then() ---> finding the earliest sunrise time
-            sunrise_times.forEach( _t => { 
+            sunrise_times.forEach(_t => { 
                 if(_t.status != "OK") throw new CustomError(_t.status, 400, _t.status)
-                const sunrisetime=moment(_t.results.sunrise, format)
-                if(earliest==undefined || sunrisetime.isBefore(earliest)) earliest = sunrisetime
+                const sunrisetime = moment(_t.results.sunrise, format)
+                if(earliest == undefined || sunrisetime.isBefore(earliest)) earliest = sunrisetime
                 sunriseTimes.push(_t.results);
             })
         }
@@ -64,7 +64,7 @@ exports.getDayLengthByUrl = async (req,res,next) => {
 
         //Step 4: outputting a list of day lengths that have earliest sunrise time
         const daylength = sunriseTimes.filter(_t => moment(_t.sunrise, format).isSame(earliest)).map(_el => _el.day_length)
-        res.status(200).send({results: daylength, unit:`${formatted=='1'? 'hh:mm:ss':'seconds'}`})
+        res.status(200).send({results: daylength, unit:`${formatted == '1'? 'hh:mm:ss':'seconds'}`})
         
         //Alternatively can use extendableFeature to find a list of output of which input meets criteria
         //e.g. res.status(200).send(extendableFeature.getMinMax(0, 'sunrise', 'day_length', sunriseTimes, format))
@@ -98,9 +98,9 @@ exports.getDayLengthByPost= async (req,res,next) => {
 
         //if count & distance are provided and numeric, convert to int/float; if not, use default values in process.env
         //count: number of points, e.g. 100 points 50 points etc
-        const count=Math.ceil(typeof req.body.count=='number'?req.body.count:process.env.COUNT)
+        const count = Math.ceil(typeof req.body.count == 'number' ? req.body.count : process.env.COUNT)
         //radius from center (lat, lng) - lat/lng + radiusDistance = area where points will be generated
-        const distance=(typeof req.body.distance=='number'?req.body.distance:process.env.DISTANCE)*1.0
+        const distance = (typeof req.body.distance == 'number' ? req.body.distance : process.env.DISTANCE) * 1.0
 
         //correct data type of lat lng radius/distance & count to be used in Step 2 to generate random points
         
@@ -108,7 +108,7 @@ exports.getDayLengthByPost= async (req,res,next) => {
         //method 1
         const point = getRandomLocations(lat, lng, distance, count)
         //method 2
-        //const point = getRandomGeo(lat, lng, distance, count);
+        //const point = getRandomGeo(lat, lng, distance, count)
 
         //Step 3 - fetching sunrise /sunset times - implemented by axios, and getting earliest sunrise time
         //alternatively can be implemented by request --- see getDayLengthByUrl step 3 above
@@ -118,7 +118,7 @@ exports.getDayLengthByPost= async (req,res,next) => {
         let sunriseTimes = []
         for(let i = 0; i < point.length; i = i + 5){
             //fetch times for not more than 5 points in parallel
-            await Promise.all(point.slice(i, Math.min(i+5,point.length)).map(_p =>
+            await Promise.all(point.slice(i, Math.min(i+5, point.length)).map(_p =>
                 fetchTimesByAxios(_p, url, sunriseTimes, earliest, format)
             )) 
         }
@@ -128,7 +128,7 @@ exports.getDayLengthByPost= async (req,res,next) => {
         const daylength = sunriseTimes.filter(_t => moment(_t.sunrise, format).isSame(earliest[0]))
                                     .map(_el => _el.day_length)
         
-        res.status(200).send({results:daylength, unit})
+        res.status(200).send({results: daylength, unit})
 
         //Alternatively can use extendableFeature to find a list of output of which input meets criteria
         //res.status(200).send(extendableFeature.getMinMax(0,'sunrise','day_length',sunriseTimes,format))
